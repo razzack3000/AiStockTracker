@@ -9,26 +9,39 @@ class Graphs extends React.Component {
 
     this.state = {
       data: {},
-      listOfStocks: ['AAPL']
+      listOfStocks: ['AAPL','GOOG'],
+      error: false
     }
+
+    for (let ticker of this.state.listOfStocks) {
+      this.getData(ticker)
+    }
+
     const getData = this.getData.bind(this);
   }
   getData(stockTicker){
     rest.stocks.previousClose(stockTicker)
-    .then((stockData) => {
-      //console.log(data)
-      this.setState({
-        data: {...this.state.data, stockTicker: stockData}
+      .then((stockData) => {
+        //console.log(data)
+        this.setState({
+          data: {...this.state.data, [stockTicker]: stockData.results}
+        })
       })
-    })
+      .catch(e => {
+        console.log(e)
+        this.setState({
+          error: true
+        })
+      })
   }
 
   render() {
-    for (let ticker in this.state.listOfStocks) {
-      this.getData(ticker)
-    }
     return (
-     <h1>{JSON.stringify(this.state.data)}</h1>
+      <React.Fragment>
+      {this.state.error && <p>"failed to load data!"</p>}
+      {!this.state.error && <p>{JSON.stringify(this.state.data)}</p>}
+      </React.Fragment>
+
 
     )
   }
