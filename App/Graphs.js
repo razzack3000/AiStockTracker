@@ -9,20 +9,22 @@ class Graphs extends React.Component {
 
     this.state = {
       data: {},
-      listOfStocks: ['AAPL','GOOG'],
-      error: false
+      listOfStocks: [],
+      error: false,
+      value: ''
     }
+    this.getData = this.getData.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
-    for (let ticker of this.state.listOfStocks) {
-      this.getData(ticker)
-    }
 
-    const getData = this.getData.bind(this);
   }
   getData(stockTicker){
-    rest.stocks.previousClose(stockTicker)
+    console.log("getting data for: " + stockTicker)
+
+    rest.stocks.aggregates(stockTicker, 1, "day", "2021-01-07", "2021-01-14")
       .then((stockData) => {
-        //console.log(data)
+
         this.setState({
           data: {...this.state.data, [stockTicker]: stockData.results}
         })
@@ -35,14 +37,43 @@ class Graphs extends React.Component {
       })
   }
 
+  handleChange(event) {
+    this.setState({value: event.target.value});
+
+  }
+
+  handleSubmit(event) {
+    this.setState({
+      listOfStocks: [...this.state.listOfStocks, this.state.value]},
+      () => {
+        this.state.listOfStocks.map((index) => {
+          this.getData(index)
+        })
+      }
+    );
+
+    event.preventDefault();
+  }
+
+
+
   render() {
+
     return (
       <React.Fragment>
-      {this.state.error && <p>"failed to load data!"</p>}
-      {!this.state.error && <p>{JSON.stringify(this.state.data)}</p>}
+       <form onSubmit={this.handleSubmit}>
+        <label>
+          Add your desired stock ticker:
+          <input value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Add" />
+      </form>
+
+
+      {this.state.error && <p>Failed to load data!</p>}
+
+      {(this.state.listOfStocks.length > 0) && <p>{JSON.stringify(this.state.data)}</p>}
       </React.Fragment>
-
-
     )
   }
 }
