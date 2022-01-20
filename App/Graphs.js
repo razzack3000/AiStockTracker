@@ -11,6 +11,9 @@ class Graphs extends React.Component {
       data: {},
       listOfStocks: [],
       error: false,
+      ticker: '',
+      dateValueStart:'',
+      dateValueEnd: ''
     }
 
     this.getData = this.getData.bind(this);
@@ -79,7 +82,8 @@ class Graphs extends React.Component {
 
       {this.state.error && <p>Failed to load data!</p>}
 
-      {(this.state.listOfStocks.length > 0) && <p>{JSON.stringify(this.state.data)}</p>}
+      {/* {(this.state.listOfStocks.length > 0) && <p>{JSON.stringify(this.state.data)}</p>} */}
+      {(this.state.listOfStocks.length > 0) && <Graph data={this.state.data}/>}
       </React.Fragment>
     )
   }
