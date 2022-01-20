@@ -11,19 +11,18 @@ class Graphs extends React.Component {
       data: {},
       listOfStocks: [],
       error: false,
-      value: ''
     }
+
     this.getData = this.getData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
-
   }
-  getData(stockTicker){
+  getData(stockTicker,startDate,endDate){
     console.log("getting data for: " + stockTicker)
 
-    rest.stocks.aggregates(stockTicker, 1, "day", "2021-01-07", "2021-01-14")
+    rest.stocks.aggregates(stockTicker, 1, "day", this.state.dateValueStart, this.state.dateValueEnd)
       .then((stockData) => {
+// use the following format for date 2021-01-17
 
         this.setState({
           data: {...this.state.data, [stockTicker]: stockData.results}
@@ -38,13 +37,16 @@ class Graphs extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({[event.target.name]: event.target.value});
 
   }
 
   handleSubmit(event) {
     this.setState({
-      listOfStocks: [...this.state.listOfStocks, this.state.value]},
+      listOfStocks: [...this.state.listOfStocks, this.state.ticker],
+      dateValueStart:this.state.dateValueStart,
+      dateValueEnd: this.state.dateValueEnd
+    },
       () => {
         this.state.listOfStocks.map((index) => {
           this.getData(index)
@@ -56,19 +58,24 @@ class Graphs extends React.Component {
   }
 
 
-
   render() {
 
     return (
       <React.Fragment>
        <form onSubmit={this.handleSubmit}>
+
         <label>
           Add your desired stock ticker:
-          <input value={this.state.value} onChange={this.handleChange} />
+          <input value={this.state.ticker} name='ticker' onChange={this.handleChange} />
+        </label>
+
+        <label>
+          Please input desired date range
+          <input value={this.state.dateValueStart} name='dateValueStart' onChange={this.handleChange} />
+          <input value={this.state.dateValueEnd} name='dateValueEnd' onChange={this.handleChange} />
         </label>
         <input type="submit" value="Add" />
       </form>
-
 
       {this.state.error && <p>Failed to load data!</p>}
 
