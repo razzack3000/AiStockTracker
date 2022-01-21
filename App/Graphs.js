@@ -1,5 +1,6 @@
 import React from 'react'
 import { fetchStockData } from './api'
+import Graph from './Graph.js'
 import { polygonClient, restClient, websocketClient } from "@polygon.io/client-js";
 const rest = restClient("a2qwjfHSc4TWL5AML9sbjFaJTiMV1FPI");
 
@@ -83,7 +84,7 @@ class Graphs extends React.Component {
       {this.state.error && <p>Failed to load data!</p>}
 
       {/* {(this.state.listOfStocks.length > 0) && <p>{JSON.stringify(this.state.data)}</p>} */}
-      {(this.state.listOfStocks.length > 0) && <Graph data={this.state.data}/>}
+      {(this.state.listOfStocks.length > 0) && <Graph data={this.state.data} ticker={this.state.ticker}/>}
       </React.Fragment>
     )
   }
