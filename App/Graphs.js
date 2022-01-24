@@ -86,7 +86,7 @@ class Graphs extends React.Component {
       {/* {(this.state.listOfStocks.length > 0) && <p>{JSON.stringify(this.state.data)}</p>} */}
       {(this.state.listOfStocks.length > 0) &&
       this.state.listOfStocks.map((i) => (
-        <Graph data={this.state.data} ticker={this.state.ticker}/>
+        <Graph data={this.state.data} ticker={i}/>
 
       ))}
 

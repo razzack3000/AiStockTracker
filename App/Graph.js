@@ -7,7 +7,16 @@ class Graph extends React.Component {
   }
 
   render() {
+    const stockTickerConversion = {
+      "AAPL": 'Apple',
+      "GOOG": 'Google',
+      "TSLA": 'Tesla',
+      "MSFT": 'Microsoft',
+      "AMD": 'AMD',
+      "NVDA": 'Nvidia',
+      "NFLX": 'Netflix'
 
+    }
     return (
       //<p>{JSON.stringify(this.props.data)}</p>
       <React.Fragment>
@@ -26,8 +35,11 @@ class Graph extends React.Component {
         <XAxis dataKey="c" />
         <YAxis />
         <Tooltip />
-        <Area type="monotone" dataKey="c" stroke="#8884d8" fill="#8884d8" />
+        <Area type="monotone" dataKey="c" stroke="#8884d8" fill="#D8F3FF" />
       </AreaChart>
+
+    {stockTickerConversion[this.props.ticker] && <p className="ticker">{stockTickerConversion[this.props.ticker]}</p>}
+
     </React.Fragment>
 
     )
