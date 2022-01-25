@@ -15,12 +15,12 @@ class Graph extends React.Component {
       "AMD": 'AMD',
       "NVDA": 'Nvidia',
       "NFLX": 'Netflix'
-
     }
+
     return (
       //<p>{JSON.stringify(this.props.data)}</p>
-      <React.Fragment>
-      <AreaChart
+      <React.Fragment >
+      <AreaChart className="graph"
         width={500}
         height={400}
         data={this.props.data[this.props.ticker]}
@@ -32,7 +32,7 @@ class Graph extends React.Component {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="c" />
+        <XAxis dataKey="" />
         <YAxis />
         <Tooltip />
         <Area type="monotone" dataKey="c" stroke="#8884d8" fill="#D8F3FF" />

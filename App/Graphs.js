@@ -7,7 +7,7 @@ const rest = restClient("a2qwjfHSc4TWL5AML9sbjFaJTiMV1FPI");
 class Graphs extends React.Component {
   constructor(props) {
     super(props)
-
+    let counter = 0;
     this.state = {
       data: {},
       listOfStocks: [],
@@ -26,7 +26,7 @@ class Graphs extends React.Component {
 
     rest.stocks.aggregates(stockTicker, 1, "day", this.state.dateValueStart, this.state.dateValueEnd)
       .then((stockData) => {
-// use the following format for date 2021-01-17
+      // use the following format for date 2021-01-17
 
         this.setState({
           data: {...this.state.data, [stockTicker]: stockData.results}
@@ -41,31 +41,43 @@ class Graphs extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+    this.setState({[event.target.name]: [event.target.value]});
 
   }
 
   handleSubmit(event) {
-    this.setState({
-      listOfStocks: [...this.state.listOfStocks, this.state.ticker],
-      dateValueStart:this.state.dateValueStart,
-      dateValueEnd: this.state.dateValueEnd
-    },
-      () => {
-        this.state.listOfStocks.map((index) => {
-          this.getData(index)
-        })
-      }
-    );
-
-    event.preventDefault();
+    if(this.state.data[this.state.ticker]){
+      this.counter++
+      this.setState({
+        listOfStocks: [...this.state.listOfStocks, `${this.state.ticker}+${this.counter}`],
+         dateValueStart:this.state.dateValueStart,
+         dateValueEnd: this.state.dateValueEnd
+    })
   }
+   this.setState({
+    listOfStocks: [...this.state.listOfStocks, this.state.ticker],
+     dateValueStart:this.state.dateValueStart,
+     dateValueEnd: this.state.dateValueEnd
+  },
+    () => {
+      //this.state.listOfStocks.map((index) => {
+        this.getData(this.state.listOfStocks[this.state.listOfStocks.length-1])
+      //})
+    }
+  )
+  event.preventDefault();
+}
+
+
+
+
 
 
   render() {
 
     return (
       <React.Fragment>
+        <p1>Stock Tracker</p1>
        <form onSubmit={this.handleSubmit}>
 
         <label>
@@ -74,8 +86,9 @@ class Graphs extends React.Component {
         </label>
 
         <label>
-          Please input desired date range
+          Please input desired date range (ex: 2020-01-15)
           <input value={this.state.dateValueStart} name='dateValueStart' onChange={this.handleChange} />
+          --
           <input value={this.state.dateValueEnd} name='dateValueEnd' onChange={this.handleChange} />
         </label>
         <input type="submit" value="Add" />
@@ -86,7 +99,7 @@ class Graphs extends React.Component {
       {/* {(this.state.listOfStocks.length > 0) && <p>{JSON.stringify(this.state.data)}</p>} */}
       {(this.state.listOfStocks.length > 0) &&
       this.state.listOfStocks.map((i) => (
-        <Graph data={this.state.data} ticker={i}/>
+        <Graph key={i} data={this.state.data} ticker={i}/>
 
       ))}
 
