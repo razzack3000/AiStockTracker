@@ -16,11 +16,12 @@ class Graph extends React.Component {
       "NVDA": 'Nvidia',
       "NFLX": 'Netflix'
     }
-
+    const data = this.props.data[this.props.ticker];
+    console.log(data);
     return (
       //<p>{JSON.stringify(this.props.data)}</p>
       <React.Fragment >
-      <AreaChart className="graph"
+      {data && <AreaChart className="graph"
         width={500}
         height={400}
         data={this.props.data[this.props.ticker]}
@@ -36,9 +37,9 @@ class Graph extends React.Component {
         <YAxis />
         <Tooltip />
         <Area type="monotone" dataKey="c" stroke="#8884d8" fill="#D8F3FF" />
-      </AreaChart>
+      </AreaChart>}
 
-    {stockTickerConversion[this.props.ticker] && <p className="ticker">{stockTickerConversion[this.props.ticker]}</p>}
+    {stockTickerConversion[this.props.ticker] ? <p className="ticker">{stockTickerConversion[this.props.ticker]}</p> : <p>{this.props.ticker}</p>}
 
     </React.Fragment>
 

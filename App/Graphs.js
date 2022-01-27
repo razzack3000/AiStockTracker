@@ -7,7 +7,7 @@ const rest = restClient("a2qwjfHSc4TWL5AML9sbjFaJTiMV1FPI");
 class Graphs extends React.Component {
   constructor(props) {
     super(props)
-    let counter = 0;
+
     this.state = {
       data: {},
       listOfStocks: [],
@@ -16,7 +16,7 @@ class Graphs extends React.Component {
       dateValueStart:'',
       dateValueEnd: ''
     }
-
+     this.counter = 0;
     this.getData = this.getData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -27,17 +27,21 @@ class Graphs extends React.Component {
     rest.stocks.aggregates(stockTicker, 1, "day", this.state.dateValueStart, this.state.dateValueEnd)
       .then((stockData) => {
       // use the following format for date 2021-01-17
-
+        this.counter++
+        // this.setState({
+        //     data: {...this.state.data, [stockTicker]: {...this.state.data[stockTicker], [this.counter]: stockData.results}}
+        // })
         this.setState({
           data: {...this.state.data, [stockTicker]: stockData.results}
-        })
       })
+    })
       .catch(e => {
         console.log(e)
         this.setState({
           error: true
         })
       })
+
   }
 
   handleChange(event) {
@@ -47,29 +51,32 @@ class Graphs extends React.Component {
 
   handleSubmit(event) {
     if(this.state.data[this.state.ticker]){
-      this.counter++
+     // this.counter++
       this.setState({
-        listOfStocks: [...this.state.listOfStocks, `${this.state.ticker}+${this.counter}`],
-         dateValueStart:this.state.dateValueStart,
-         dateValueEnd: this.state.dateValueEnd
-    })
-  }
-   this.setState({
-    listOfStocks: [...this.state.listOfStocks, this.state.ticker],
-     dateValueStart:this.state.dateValueStart,
-     dateValueEnd: this.state.dateValueEnd
+        listOfStocks: [...this.state.listOfStocks, `${this.state.ticker} ${this.counter}`],
+        //  dateValueStart:this.state.dateValueStart,
+        //  dateValueEnd: this.state.dateValueEnd
+      },
+      () => {
+      //this.state.listOfStocks.map((index) => {
+        this.getData(this.state.listOfStocks[this.state.listOfStocks.length-1])
+      //})
+    }
+  )
+  } else { this.setState({
+    listOfStocks: [...this.state.listOfStocks, `${this.state.ticker}`],
+    //  dateValueStart:this.state.dateValueStart,
+    //  dateValueEnd: this.state.dateValueEnd
   },
     () => {
       //this.state.listOfStocks.map((index) => {
         this.getData(this.state.listOfStocks[this.state.listOfStocks.length-1])
       //})
     }
-  )
+  ) }
+
   event.preventDefault();
 }
-
-
-
 
 
 
@@ -99,7 +106,7 @@ class Graphs extends React.Component {
       {/* {(this.state.listOfStocks.length > 0) && <p>{JSON.stringify(this.state.data)}</p>} */}
       {(this.state.listOfStocks.length > 0) &&
       this.state.listOfStocks.map((i) => (
-        <Graph key={i} data={this.state.data} ticker={i}/>
+        <Graph key={`${i}-stock`} data={this.state.data} ticker={i} counter={this.counter} latestStock={this.state.listOfStocks[this.state.listOfStocks.length-1]}/>
 
       ))}
 
