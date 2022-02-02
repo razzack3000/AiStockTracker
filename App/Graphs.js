@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { fetchStockData } from './api'
 import Graph from './Graph.js'
 import { polygonClient, restClient, websocketClient } from "@polygon.io/client-js";
 const rest = restClient("a2qwjfHSc4TWL5AML9sbjFaJTiMV1FPI");
+
 
 class Graphs extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class Graphs extends React.Component {
     this.getData = this.getData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.deleteGraph = this.deleteGraph.bind(this);
   }
   getData(stockTicker,startDate,endDate){
     console.log("getting data for: " + stockTicker)
@@ -46,7 +48,7 @@ class Graphs extends React.Component {
 
   handleChange(event) {
     this.setState({[event.target.name]: [event.target.value]});
-
+    event.preventDefault();
   }
 
   handleSubmit(event) {
@@ -79,6 +81,15 @@ class Graphs extends React.Component {
 }
 
 
+  deleteGraph(selectedTicker){
+    const newTickers = this.state.listOfStocks.filter((element) => {
+      return element !== selectedTicker
+    });
+    console.log(newTickers)
+    this.setState({
+      listOfStocks: newTickers
+    })
+  }
 
   render() {
 
@@ -106,7 +117,7 @@ class Graphs extends React.Component {
       {/* {(this.state.listOfStocks.length > 0) && <p>{JSON.stringify(this.state.data)}</p>} */}
       {(this.state.listOfStocks.length > 0) &&
       this.state.listOfStocks.map((i) => (
-        <Graph key={`${i}-stock`} data={this.state.data} ticker={i} counter={this.counter} latestStock={this.state.listOfStocks[this.state.listOfStocks.length-1]}/>
+        <Graph key={`${i}-stock`} data={this.state.data} ticker={i} counter={this.counter} latestStock={this.state.listOfStocks[this.state.listOfStocks.length-1]} deleteGraph={this.deleteGraph}/>
 
       ))}
 
