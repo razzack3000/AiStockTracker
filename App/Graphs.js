@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { fetchStockData } from './api'
 import Graph from './Graph.js'
+import "./index.css";
 import { polygonClient, restClient, websocketClient } from "@polygon.io/client-js";
 const rest = restClient("a2qwjfHSc4TWL5AML9sbjFaJTiMV1FPI");
 
@@ -94,34 +95,34 @@ class Graphs extends React.Component {
   render() {
 
     return (
-      <React.Fragment>
-        <p1>Stock Tracker</p1>
+      <div>
+        <h1 className="heading">Stock Tracker</h1>
        <form onSubmit={this.handleSubmit}>
 
-        <label>
-          Add your desired stock ticker:
-          <input value={this.state.ticker} name='ticker' onChange={this.handleChange} />
+        <label className="tickerData">
+        Add your desired stock ticker:
         </label>
+        <input value={this.state.ticker} name='ticker' onChange={this.handleChange} />
 
-        <label>
+
+        <label className="tickerData">
           Please input desired date range (ex: 2020-01-15)
           <input value={this.state.dateValueStart} name='dateValueStart' onChange={this.handleChange} />
           --
           <input value={this.state.dateValueEnd} name='dateValueEnd' onChange={this.handleChange} />
-        </label>
+        </label >
         <input type="submit" value="Add" />
       </form>
 
       {this.state.error && <p>Failed to load data!</p>}
 
-      {/* {(this.state.listOfStocks.length > 0) && <p>{JSON.stringify(this.state.data)}</p>} */}
+      <div className="container">
       {(this.state.listOfStocks.length > 0) &&
       this.state.listOfStocks.map((i) => (
         <Graph key={`${i}-stock`} data={this.state.data} ticker={i} counter={this.counter} latestStock={this.state.listOfStocks[this.state.listOfStocks.length-1]} deleteGraph={this.deleteGraph}/>
-
       ))}
-
-    </React.Fragment>
+      </div>
+    </div>
     )
   }
 }

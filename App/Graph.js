@@ -1,7 +1,7 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import Button from '@mui/material/Button';
-
+import "./index.css";
 
 class Graph extends React.Component {
   constructor(props){
@@ -19,11 +19,10 @@ class Graph extends React.Component {
       "NFLX": 'Netflix'
     }
     const data = this.props.data[this.props.ticker];
-    console.log(data);
-    //const currentTicker = this.props.ticker;
     return (
-      //<p>{JSON.stringify(this.props.data)}</p>
-    <React.Fragment >
+
+
+      <div>
       {data && <AreaChart className="graph"
         width={500}
         height={400}
@@ -42,11 +41,11 @@ class Graph extends React.Component {
         <Area type="monotone" dataKey="c" stroke="#8884d8" fill="#D8F3FF" />
       </AreaChart>}
 
-      {stockTickerConversion[this.props.ticker] ? <p className="flex-container">{stockTickerConversion[this.props.ticker]}</p> : <p className="flex-container">{this.props.ticker}</p>}
+      {stockTickerConversion[this.props.ticker] ? <p className="name">{stockTickerConversion[this.props.ticker]}</p> : <p className="name">{this.props.ticker}</p>}
 
-      <Button onClick={() => this.props.deleteGraph(this.props.ticker)}>Remove</Button>
+      <Button className="buttonName" onClick={() => this.props.deleteGraph(this.props.ticker)}>Remove</Button>
 
-    </React.Fragment>
+      </div>
 
     )
   }
