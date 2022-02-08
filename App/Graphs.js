@@ -102,16 +102,16 @@ class Graphs extends React.Component {
         <label className="tickerData">
         Add your desired stock ticker:
         </label>
-        <input value={this.state.ticker} name='ticker' onChange={this.handleChange} />
+        <input className="tickerData" value={this.state.ticker} name='ticker' onChange={this.handleChange} />
 
 
         <label className="tickerData">
           Please input desired date range (ex: 2020-01-15)
           <input value={this.state.dateValueStart} name='dateValueStart' onChange={this.handleChange} />
-          --
-          <input value={this.state.dateValueEnd} name='dateValueEnd' onChange={this.handleChange} />
+          To:
+          <input className="tickerData" value={this.state.dateValueEnd} name='dateValueEnd' onChange={this.handleChange} />
         </label >
-        <input type="submit" value="Add" />
+        <input className="tickerData" type="submit" value="Add" />
       </form>
 
       {this.state.error && <p>Failed to load data!</p>}
