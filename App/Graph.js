@@ -43,7 +43,7 @@ class Graph extends React.Component {
 
       {stockTickerConversion[this.props.ticker] ? <p className="tickerData">{stockTickerConversion[this.props.ticker]}</p> : <p className="tickerData">{this.props.ticker}</p>}
 
-      <Button className="tickerData" onClick={() => this.props.deleteGraph(this.props.ticker)}>Remove</Button>
+      <Button className="button" onClick={() => this.props.deleteGraph(this.props.ticker)}>Remove</Button>
 
       </div>
 
