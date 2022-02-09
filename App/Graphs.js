@@ -18,7 +18,7 @@ class Graphs extends React.Component {
       dateValueStart:'',
       dateValueEnd: ''
     }
-     this.counter = 0;
+    this.counter = 0;
     this.getData = this.getData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
