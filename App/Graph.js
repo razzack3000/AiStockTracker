@@ -24,7 +24,9 @@ class Graph extends React.Component {
     }
     const data = this.props.data[this.props.ticker];
     return (
+      <div className="graph">
 
+      {stockTickerConversion[this.props.ticker] ? <p className="graphLabels">{stockTickerConversion[this.props.ticker]}</p> : <p className="graphLabels">{this.props.ticker}</p>}
 
       <div className="graph">
       {data && <AreaChart
@@ -45,7 +47,7 @@ class Graph extends React.Component {
         <Area type="monotone" dataKey="c" stroke="#8884d8" fill="#D8F3FF" />
       </AreaChart>}
 
-      {stockTickerConversion[this.props.ticker] ? <p className="graphLabels">{stockTickerConversion[this.props.ticker]}</p> : <p className="graphLabels">{this.props.ticker}</p>}
+
 
       {/* <IconButton size="small" className="button">
         <DeleteIcon onClick={() => this.props.deleteGraph(this.props.ticker)}>
@@ -63,7 +65,7 @@ class Graph extends React.Component {
           Remove
         </Button>
       </div>
-
+        </div>
     )
   }
 }

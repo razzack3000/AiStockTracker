@@ -97,36 +97,54 @@ class Graphs extends React.Component {
     return (
       <div>
         <h1 className="heading">Stock Tracker</h1>
-       <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
 
-        <div className="tickerData">
-        <label >
-        Add your desired stock ticker:
-        </label>
-        <input className="tickerDataInput" value={this.state.ticker} name='ticker' onChange={this.handleChange} />
-        </div>
+          <div className="tickerData">
+            <label >
+            Add your desired stock ticker:
+            </label>
+          </div >
+            <div className="tickerData">
+              <input className="tickerDataInput" value={this.state.ticker} name='ticker' onChange={this.handleChange} />
 
-        <div className="tickerData">
-        <label >
-          Please input desired date range (ex: 2020-01-15)
-          <input className="tickerDataInput" value={this.state.dateValueStart} name='dateValueStart' onChange={this.handleChange} />
-          To:
-          <input className="tickerDataInput" value={this.state.dateValueEnd} name='dateValueEnd' onChange={this.handleChange} />
-        </label >
-        <input className="tickerData" type="submit" value="Add" />
+            </div>
 
-        </div>
-      </form>
+            <div className="tickerData">
+            <div className="tickerData">
+            <label >
+                Please input desired date range (ex: 2020-01-15)
+            </label>
+            </div>
+            <div className="tickerDataInput">
+              <input className="tickerDataInput" value={this.state.dateValueStart} name='dateValueStart' onChange={this.handleChange} />
+            </div>
+
+            <div className="tickerData">
+            <label>
+              To:
+            </label >
+            </div>
+
+            <div className="tickerDataInput">
+              <input className="tickerDataInput" value={this.state.dateValueEnd} name='dateValueEnd' onChange={this.handleChange} />
+            </div>
+
+            <div className="tickerDataInputAdd">
+              <input className="tickerDataInput" type="submit" value="Add" />
+            </div>
+
+            </div>
+        </form>
 
       {this.state.error && <p>Failed to load data!</p>}
 
-      <div className="container">
-      {(this.state.listOfStocks.length > 0) &&
-      this.state.listOfStocks.map((i) => (
-        <Graph key={`${i}-stock`} data={this.state.data} ticker={i} counter={this.counter} latestStock={this.state.listOfStocks[this.state.listOfStocks.length-1]} deleteGraph={this.deleteGraph}/>
-      ))}
+        <div className="container">
+        {(this.state.listOfStocks.length > 0) &&
+        this.state.listOfStocks.map((i) => (
+          <Graph key={`${i}-stock`} data={this.state.data} ticker={i} counter={this.counter} latestStock={this.state.listOfStocks[this.state.listOfStocks.length-1]} deleteGraph={this.deleteGraph}/>
+        ))}
+        </div>
       </div>
-    </div>
     )
   }
 }
