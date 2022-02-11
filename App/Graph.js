@@ -1,6 +1,10 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+
 import "./index.css";
 
 class Graph extends React.Component {
@@ -22,8 +26,8 @@ class Graph extends React.Component {
     return (
 
 
-      <div>
-      {data && <AreaChart className="graph"
+      <div className="graph">
+      {data && <AreaChart
         width={500}
         height={400}
         data={this.props.data[this.props.ticker]}
@@ -41,10 +45,23 @@ class Graph extends React.Component {
         <Area type="monotone" dataKey="c" stroke="#8884d8" fill="#D8F3FF" />
       </AreaChart>}
 
-      {stockTickerConversion[this.props.ticker] ? <p className="tickerData">{stockTickerConversion[this.props.ticker]}</p> : <p className="tickerData">{this.props.ticker}</p>}
+      {stockTickerConversion[this.props.ticker] ? <p className="graphLabels">{stockTickerConversion[this.props.ticker]}</p> : <p className="graphLabels">{this.props.ticker}</p>}
 
-      <Button className="button" onClick={() => this.props.deleteGraph(this.props.ticker)}>Remove</Button>
+      {/* <IconButton size="small" className="button">
+        <DeleteIcon onClick={() => this.props.deleteGraph(this.props.ticker)}>
 
+        </DeleteIcon>
+
+        </IconButton> */}
+
+
+        {/* <IconButton aria-label="delete" onClick={() => this.props.deleteGraph(this.props.ticker)}>
+        <DeleteIcon fontSize="inherit" />
+        </IconButton> */}
+
+        <Button onClick={() => this.props.deleteGraph(this.props.ticker)} variant="outlined" size="small">
+          Remove
+        </Button>
       </div>
 
     )

@@ -99,19 +99,23 @@ class Graphs extends React.Component {
         <h1 className="heading">Stock Tracker</h1>
        <form onSubmit={this.handleSubmit}>
 
-        <label className="tickerData">
+        <div className="tickerData">
+        <label >
         Add your desired stock ticker:
         </label>
-        <input className="tickerData" value={this.state.ticker} name='ticker' onChange={this.handleChange} />
+        <input className="tickerDataInput" value={this.state.ticker} name='ticker' onChange={this.handleChange} />
+        </div>
 
-
-        <label className="tickerData">
+        <div className="tickerData">
+        <label >
           Please input desired date range (ex: 2020-01-15)
-          <input value={this.state.dateValueStart} name='dateValueStart' onChange={this.handleChange} />
+          <input className="tickerDataInput" value={this.state.dateValueStart} name='dateValueStart' onChange={this.handleChange} />
           To:
-          <input className="tickerData" value={this.state.dateValueEnd} name='dateValueEnd' onChange={this.handleChange} />
+          <input className="tickerDataInput" value={this.state.dateValueEnd} name='dateValueEnd' onChange={this.handleChange} />
         </label >
         <input className="tickerData" type="submit" value="Add" />
+
+        </div>
       </form>
 
       {this.state.error && <p>Failed to load data!</p>}
