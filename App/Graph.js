@@ -23,10 +23,17 @@ class Graph extends React.Component {
       "NFLX": 'Netflix'
     }
     const data = this.props.data[this.props.ticker];
+
+    //console.log(Object.keys(data))
+    // const closeData =
+     const closingPrice = data[data.length-1].c
+     console.log(closingPrice)
     return (
       <div className="graph">
-
       {stockTickerConversion[this.props.ticker] ? <p className="graphLabels">{stockTickerConversion[this.props.ticker]}</p> : <p className="graphLabels">{this.props.ticker}</p>}
+      <div className>
+        <h5>Latest value:  $ {closingPrice}</h5>
+      </div>
 
       <div className="graph">
       {data && <AreaChart
@@ -46,20 +53,6 @@ class Graph extends React.Component {
         <Tooltip />
         <Area type="monotone" dataKey="c" stroke="#8884d8" fill="#D8F3FF" />
       </AreaChart>}
-
-
-
-      {/* <IconButton size="small" className="button">
-        <DeleteIcon onClick={() => this.props.deleteGraph(this.props.ticker)}>
-
-        </DeleteIcon>
-
-        </IconButton> */}
-
-
-        {/* <IconButton aria-label="delete" onClick={() => this.props.deleteGraph(this.props.ticker)}>
-        <DeleteIcon fontSize="inherit" />
-        </IconButton> */}
 
         <Button onClick={() => this.props.deleteGraph(this.props.ticker)} variant="outlined" size="small">
           Remove

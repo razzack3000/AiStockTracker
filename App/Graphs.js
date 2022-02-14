@@ -24,7 +24,7 @@ class Graphs extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.deleteGraph = this.deleteGraph.bind(this);
   }
-  getData(stockTicker,startDate,endDate){
+  getData(stockTicker){
     console.log("getting data for: " + stockTicker)
 
     rest.stocks.aggregates(stockTicker, 1, "day", this.state.dateValueStart, this.state.dateValueEnd)
@@ -54,22 +54,19 @@ class Graphs extends React.Component {
 
   handleSubmit(event) {
     if(this.state.data[this.state.ticker]){
-     // this.counter++
+      this.counter++
       this.setState({
-        listOfStocks: [...this.state.listOfStocks, `${this.state.ticker} ${this.counter}`],
-        //  dateValueStart:this.state.dateValueStart,
-        //  dateValueEnd: this.state.dateValueEnd
+        listOfStocks: [...this.state.listOfStocks, `${this.state.ticker}`],
       },
       () => {
       //this.state.listOfStocks.map((index) => {
-        this.getData(this.state.listOfStocks[this.state.listOfStocks.length-1])
+        // this.getData(this.state.listOfStocks[this.state.listOfStocks.length-1])
+        this.getData(this.state.ticker)
       //})
     }
   )
   } else { this.setState({
     listOfStocks: [...this.state.listOfStocks, `${this.state.ticker}`],
-    //  dateValueStart:this.state.dateValueStart,
-    //  dateValueEnd: this.state.dateValueEnd
   },
     () => {
       //this.state.listOfStocks.map((index) => {
@@ -83,13 +80,17 @@ class Graphs extends React.Component {
 
 
   deleteGraph(selectedTicker){
-    const newTickers = this.state.listOfStocks.filter((element) => {
-      return element !== selectedTicker
-    });
-    console.log(newTickers)
-    this.setState({
-      listOfStocks: newTickers
-    })
+    // const newTickers = this.state.listOfStocks.filter((element) => {
+    //   return element !== selectedTicker
+    // });
+    // this.setState({
+    //   listOfStocks: newTickers,
+
+    // })
+      let state = {...this.state};
+      delete state.data[selectedTicker];
+      this.setState(state);
+
   }
 
   render() {
@@ -139,9 +140,9 @@ class Graphs extends React.Component {
       {this.state.error && <p>Failed to load data!</p>}
 
         <div className="container">
-        {(this.state.listOfStocks.length > 0) &&
-        this.state.listOfStocks.map((i) => (
-          <Graph key={`${i}-stock`} data={this.state.data} ticker={i} counter={this.counter} latestStock={this.state.listOfStocks[this.state.listOfStocks.length-1]} deleteGraph={this.deleteGraph}/>
+        {(Object.keys(this.state.data).length > 0) &&
+        Object.keys(this.state.data).map((element,i) => (
+          <Graph key={`${i}1`} data={this.state.data} ticker={element} counter={this.counter} latestStock={this.state.listOfStocks[this.state.listOfStocks.length-1]} deleteGraph={this.deleteGraph}/>
         ))}
         </div>
       </div>
