@@ -13,7 +13,7 @@ class Graph extends React.Component {
   }
 
   render() {
-    const stockTickerConversion = {
+     const stockTickerConversion = {
       "AAPL": 'Apple',
       "GOOG": 'Google',
       "TSLA": 'Tesla',
@@ -22,16 +22,14 @@ class Graph extends React.Component {
       "NVDA": 'Nvidia',
       "NFLX": 'Netflix'
     }
-    const data = this.props.data[this.props.ticker];
+     const data = this.props.data[this.props.ticker];
 
-    //console.log(Object.keys(data))
-    // const closeData =
      const closingPrice = data[data.length-1].c
      console.log(closingPrice)
     return (
       <div className="graph">
       {stockTickerConversion[this.props.ticker] ? <p className="graphLabels">{stockTickerConversion[this.props.ticker]}</p> : <p className="graphLabels">{this.props.ticker}</p>}
-      <div className>
+      <div className="price">
         <h5>Latest value:  $ {closingPrice}</h5>
       </div>
 

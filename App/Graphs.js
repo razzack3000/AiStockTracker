@@ -12,7 +12,6 @@ class Graphs extends React.Component {
 
     this.state = {
       data: {},
-      listOfStocks: [],
       error: false,
       ticker: '',
       dateValueStart:'',
@@ -31,9 +30,6 @@ class Graphs extends React.Component {
       .then((stockData) => {
       // use the following format for date 2021-01-17
         this.counter++
-        // this.setState({
-        //     data: {...this.state.data, [stockTicker]: {...this.state.data[stockTicker], [this.counter]: stockData.results}}
-        // })
         this.setState({
           data: {...this.state.data, [stockTicker]: stockData.results}
       })
@@ -44,55 +40,23 @@ class Graphs extends React.Component {
           error: true
         })
       })
-
   }
-
   handleChange(event) {
     this.setState({[event.target.name]: [event.target.value]});
     event.preventDefault();
   }
 
   handleSubmit(event) {
-    if(this.state.data[this.state.ticker]){
-      this.counter++
-      this.setState({
-        listOfStocks: [...this.state.listOfStocks, `${this.state.ticker}`],
-      },
-      () => {
-      //this.state.listOfStocks.map((index) => {
-        // this.getData(this.state.listOfStocks[this.state.listOfStocks.length-1])
-        this.getData(this.state.ticker)
-      //})
-    }
-  )
-  } else { this.setState({
-    listOfStocks: [...this.state.listOfStocks, `${this.state.ticker}`],
-  },
-    () => {
-      //this.state.listOfStocks.map((index) => {
-        this.getData(this.state.listOfStocks[this.state.listOfStocks.length-1])
-      //})
-    }
-  ) }
+  this.getData(this.state.ticker)
 
   event.preventDefault();
 }
-
-
-  deleteGraph(selectedTicker){
-    // const newTickers = this.state.listOfStocks.filter((element) => {
-    //   return element !== selectedTicker
-    // });
-    // this.setState({
-    //   listOfStocks: newTickers,
-
-    // })
+  deleteGraph(selectedTicker) {
       let state = {...this.state};
       delete state.data[selectedTicker];
       this.setState(state);
 
   }
-
   render() {
 
     return (
@@ -142,7 +106,7 @@ class Graphs extends React.Component {
         <div className="container">
         {(Object.keys(this.state.data).length > 0) &&
         Object.keys(this.state.data).map((element,i) => (
-          <Graph key={`${i}1`} data={this.state.data} ticker={element} counter={this.counter} latestStock={this.state.listOfStocks[this.state.listOfStocks.length-1]} deleteGraph={this.deleteGraph}/>
+          <Graph key={`${i}1`} data={this.state.data} ticker={element} counter={this.counter} deleteGraph={this.deleteGraph}/>
         ))}
         </div>
       </div>
