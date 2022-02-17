@@ -17,7 +17,6 @@ class Graphs extends React.Component {
       dateValueStart:'',
       dateValueEnd: ''
     }
-    this.counter = 0;
     this.getData = this.getData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -106,7 +105,7 @@ class Graphs extends React.Component {
         <div className="container">
         {(Object.keys(this.state.data).length > 0) &&
         Object.keys(this.state.data).map((element,i) => (
-          <Graph key={`${i}1`} data={this.state.data} ticker={element} counter={this.counter} deleteGraph={this.deleteGraph}/>
+          <Graph key={`${i}`} data={this.state.data} ticker={element}  deleteGraph={this.deleteGraph}/>
         ))}
         </div>
       </div>
