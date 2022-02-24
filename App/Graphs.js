@@ -4,6 +4,8 @@ import Graph from './Graph.js'
 import "./index.css";
 import { polygonClient, restClient, websocketClient } from "@polygon.io/client-js";
 const rest = restClient("a2qwjfHSc4TWL5AML9sbjFaJTiMV1FPI");
+import DatePicker from "react-datepicker";
+
 
 
 class Graphs extends React.Component {
@@ -28,7 +30,7 @@ class Graphs extends React.Component {
     rest.stocks.aggregates(stockTicker, 1, "day", this.state.dateValueStart, this.state.dateValueEnd)
       .then((stockData) => {
       // use the following format for date 2021-01-17
-        this.counter++
+
         this.setState({
           data: {...this.state.data, [stockTicker]: stockData.results}
       })
@@ -60,9 +62,9 @@ class Graphs extends React.Component {
 
     return (
       <div>
+
         <h1 className="heading">Stock Tracker</h1>
         <form onSubmit={this.handleSubmit}>
-
           <div className="tickerData">
             <label >
             Add your desired stock ticker:
@@ -79,7 +81,10 @@ class Graphs extends React.Component {
                 Please input desired date range (ex: 2020-01-15)
             </label>
             </div>
+
+
             <div className="tickerDataInput">
+
               <input className="tickerDataInput" value={this.state.dateValueStart} name='dateValueStart' onChange={this.handleChange} />
             </div>
 
